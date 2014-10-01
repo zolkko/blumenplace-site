@@ -13,7 +13,7 @@ var gulp = require('gulp'),
 
 var srcDir = __dirname,
     srcScssDir = path.join(srcDir, 'scss/*.scss'),
-    dstDir = argv.o ? argv.o : path.join(__dirname, 'output'),
+    dstDir = argv.o ? argv.o : path.join(__dirname, 'build'),
     dstCssDir = path.join(dstDir, 'css');
 
 
