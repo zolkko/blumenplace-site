@@ -1,0 +1,16 @@
+
+ul.menu {
+    li {
+        padding: 10px;
+        display: inline-block;
+        a {
+            font-size: 1.4em;
+            color: #43444e;
+            text-decoration: none !important;
+        }
+        a:hover {
+            color: #eb6851;
+        }
+    }
+}
+

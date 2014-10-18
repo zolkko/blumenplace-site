@@ -8,13 +8,17 @@ var gulp = require('gulp'),
     autoprefixer = require('gulp-autoprefixer'),
     minifycss = require('gulp-minify-css'),
     rename = require('gulp-rename'),
-    argv = require('yargs').argv;
+    argv = require('yargs').argv,
+    connect = require('gulp-connect');
 
 
 var srcDir = __dirname,
     srcScssDir = path.join(srcDir, 'scss/*.scss'),
+    srcHtmlDir = path.join(srcDir, '*.html'),
+    srcSvgDir = path.join(srcDir, 'img/*.svg'),
     dstDir = argv.o ? argv.o : path.join(__dirname, 'build'),
-    dstCssDir = path.join(dstDir, 'css');
+    dstCssDir = path.join(dstDir, 'css'),
+    dstImgDir = path.join(dstDir, 'img');
 
 
 gulp.task('clean', function () {
@@ -40,12 +44,36 @@ gulp.task('build-sass', function () {
 
 
 gulp.task('build-html', function () {
-    gulp.src(path.join(srcDir, 'index.html'))
+    gulp.src(path.join(srcDir, '*.html'))
         .pipe(minifyHTML({quotes: true}))
         .pipe(gulp.dest(dstDir))
+        .pipe(connect.reload());
 });
 
 
-gulp.task('default', ['build-html', 'build-sass'], function () {
+gulp.task('build-img', function () {
+    gulp.src(srcSvgDir)
+        .pipe(gulp.dest(dstImgDir))
+        .pipe(connect.reload());
+});
+
+
+gulp.task('watch', function () {
+    gulp.watch([srcHtmlDir], ['build-html']);
+    gulp.watch([srcScssDir], ['build-sass']);
+    gulp.watch([srcSvgDir], ['build-img']);
+});
+
+
+gulp.task('connect', ['watch'], function () {
+    connect.server({
+        root: 'build',
+        port: 8085,
+        livereload: true
+    });
+});
+
+
+gulp.task('default', ['build-html', 'build-sass', 'build-img'], function () {
 });
 
