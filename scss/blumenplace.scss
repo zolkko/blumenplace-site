@@ -2,20 +2,16 @@
 
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,600,700&subset=latin,latin-ext);
 
-@import 'variables';
+@import "variables";
 
+@import "bootstrap/_variables";
+@import "bootstrap/mixins";
 
-@import 'bootstrap/mixins';
-@import 'bootstrap/_variables';
-@import 'bootstrap/_normalize';
-@import 'bootstrap/_scaffolding';
-@import 'bootstrap/_type';
-@import 'bootstrap/_code';
-@import 'bootstrap/_grid';
+@import "bootstrap/_normalize";
+@import "bootstrap/_scaffolding";
+@import "bootstrap/_grid";
 
-@import 'github-ribbon';
-@import 'headers';
-@import 'menu';
-@import 'sections';
-@import 'text';
-
+@import "github-ribbon";
+@import "type";
+@import "menu";
+@import "sections";
