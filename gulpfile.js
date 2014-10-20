@@ -1,7 +1,6 @@
 var gulp = require('gulp'),
     run = require('gulp-run'),
     source = require('vinyl-source-stream'),
-    clean = require('gulp-clean'),
     path = require('path'),
     sass = require('gulp-sass'),
     minifyHTML = require('gulp-minify-html'),
@@ -9,6 +8,9 @@ var gulp = require('gulp'),
     minifycss = require('gulp-minify-css'),
     rename = require('gulp-rename'),
     argv = require('yargs').argv,
+    fileinclude = require('gulp-file-include'),
+    markdown = require('markdown'),
+    del = require('del'),
     connect = require('gulp-connect');
 
 
@@ -21,15 +23,12 @@ var srcDir = __dirname,
     dstImgDir = path.join(dstDir, 'img');
 
 
-gulp.task('clean', function () {
-    gulp.src(path.join(dstDir, '**', '*.html'), {read: false})
-        .pipe(clean());
-
-    gulp.src(path.join(dstDir, '**', '*.js'), {read: false})
-        .pipe(clean());
-
-    gulp.src(path.join(dstDir, '**', '*.css'), {read: false})
-        .pipe(clean());
+gulp.task('clean', function (cb) {
+    del([
+        path.join(dstDir, '**', '*.html'),
+        path.join(dstDir, '**', '*.js'),
+        path.join(dstDir, '**', '*.css'),
+    ], cb);
 });
 
 
@@ -45,6 +44,13 @@ gulp.task('build-sass', function () {
 
 gulp.task('build-html', function () {
     gulp.src(path.join(srcDir, '*.html'))
+        .pipe(fileinclude({
+            prefix: '@@',
+            basepath: '@file',
+            filters: {
+                markdown: markdown.parse
+            }
+        }))
         .pipe(minifyHTML({quotes: true}))
         .pipe(gulp.dest(dstDir))
         .pipe(connect.reload());

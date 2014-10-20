@@ -4,7 +4,14 @@
 
 @import 'variables';
 
+
+@import 'bootstrap/mixins';
+@import 'bootstrap/_variables';
 @import 'bootstrap/_normalize';
+@import 'bootstrap/_scaffolding';
+@import 'bootstrap/_type';
+@import 'bootstrap/_code';
+@import 'bootstrap/_grid';
 
 @import 'github-ribbon';
 @import 'headers';
