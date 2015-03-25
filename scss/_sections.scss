@@ -1,12 +1,33 @@
+.flex-parent {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    align-content: stretch;
+}
+    .flex-item-grow {
+        flex: 1;
+    }
 
-.fbg-white  {
+.head-line {
+    height: 50px;
+}
+
+.fbg-white {
     padding: 50px 0;
     background: #fff;
 }
 
+.fb-white-post {
+    padding: 0 0 50px 0;
+    background: #fff;
+}
 
 .fbg-banner {
 	padding: 20px 0;
+    margin: 0;
 	background: #efefef url(/img/carbon.svg);
     min-height: 170px;
 
@@ -17,18 +38,15 @@
     }
 }
 
-
 .fbg-darkblue {
     color: #fff;
     background: #1c1f2a;
 }
 
-
 .fbg-lightblue {
     color: #fff;
     background: #43444e;
 }
-
 
 .fbg-grayblue {
     padding: 50px 0;
@@ -36,17 +54,14 @@
     background: #43444e;
 }
 
-
 .fbg-darkgrayblue {
     color: #ccc;
     background: #373841;
 }
 
-
 .section-shadow {
 	box-shadow: inset 0px 0px 20px -2px rgba(0, 0, 0, 0.75);
 }
-
 
 .section-sep {
 	display: block;
@@ -55,11 +70,13 @@
 	color: #fff;
 }
 
+article {
+    margin-bottom: 50px;
+}
 
 footer {
 	display: block;
 	background: url(/img/pattern.svg);
 	padding: 50px 20px;
-	min-height: 120px;
 }
 

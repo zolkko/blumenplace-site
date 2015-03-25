@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+    {{> head }}
+    {{> syntax-header }}
+    <body class="flex-parent">
+        {{> head-line }}
+        {{> header subtitle="technical docs"}}
+		<div class="container-fluid fb-white-post flex-item-grow">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-9">
+                        {{#each (limit collections.posts this.pagination.end this.pagination.start)}}
+                        <h1>{{ this.title }}</h1>
+                        <div class="post-date">{{ formatDate this.date day="numeric" month="long" year="numeric"}}</div>
+                        <article>{{#if this.excerpt}}{{{ this.excerpt }}}{{else}}{{{ this.contents }}}{{/if}}</article>
+                        <a href="/{{ this.path }}" class="read-more">Read More</a>
+                        {{/each}}
+                    </div>
+                    <div class="col-md-3">
+                        <ul>
+                            {{#each collections.posts}}
+                            <li><a href="/{{ this.path }}">{{ this.title }}</a></li>
+                            {{/each}}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+		<div class="container-fluid fbg-white">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        {{#if this.pagination}}
+                        <nav class="pagination">
+                            {{#if this.pagination.prev}}<a href="/{{ this.pagination.prev.path }}">&lt; Next</a>{{/if}}
+                            {{#if this.pagination.next}}<a href="/{{ this.pagination.next.path }}">Prev &gt;</a>{{/if}}
+                        </nav>
+                        {{/if}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{> foot-line }}
+	</body>
+</html>
+

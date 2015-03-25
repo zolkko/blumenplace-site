@@ -10,7 +10,9 @@
 @import "bootstrap/_normalize";
 @import "bootstrap/_scaffolding";
 @import "bootstrap/_grid";
+@import "bootstrap/_type.scss";
 
+@import "reset";
 @import "github-ribbon";
 @import "type";
 @import "menu";
