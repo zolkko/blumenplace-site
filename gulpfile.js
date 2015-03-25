@@ -146,7 +146,7 @@ gulp.task('build-html', function () {
             }
         }))
         .use(paginate({
-            perPage: 1,
+            perPage: 10,
             path: 'blog/page'
         }))
         .use(metalMd({

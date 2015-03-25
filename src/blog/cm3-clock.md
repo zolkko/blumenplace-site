@@ -32,10 +32,3 @@ configuration is done during start-up phase the application can reconfigure cloc
 For instance, you may want to switch to low power internal oscillator right before the
 controller goes to sleep mode and then when it wakes up reset 40Mhz PLL as system clock.
 
-# Tasks
-Implement delay function using systick module.
-
-
-# Questions
-What is the maximum frequency CAN Clock may have?
-
