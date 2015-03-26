@@ -49,22 +49,12 @@ function parseArguments() {
     var optparse = require('optparse'),
         switches = [
             ['--build-dir', 'Build output directory'],
-            ['--host', 'Remote host name to deploy to'],
-            ['--remote-dir', 'Remote host directory to copy build files to'],
             ['-h', '--help', 'Display this help']
         ],
         parser = new optparse.OptionParser(switches);
 
     parser.on('build-dir', function(value) {
         buildDir = value;
-    });
-
-    parser.on('host', function (value) {
-        remoteHost = value;
-    });
-
-    parser.on('remote-dir', function (value) {
-        remoteDir = value;
     });
 
     parser.on('help', function () {
@@ -80,7 +70,7 @@ function parseArguments() {
             }
         }
 
-        console.log('\nSupported commands: build, connect and deplay.');
+        console.log('\nSupported commands: build, build-* and connect.');
 
         process.exit();
     });
@@ -88,9 +78,7 @@ function parseArguments() {
     parser.parse(process.argv);
 
     return {
-        buildDir: buildDir,
-        remoteHost: remoteHost,
-        remoteDir: remoteDir
+        buildDir: buildDir
     }
 }
 

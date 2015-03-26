@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-    {{> head }}
-    {{> syntax-header }}
+    <head>
+        {{> head }}
+        {{> syntax-header }}
+    </head>
     <body class="flex-parent">
         {{> head-line }}
         {{> header subtitle="technical docs"}}
-		<div class="container-fluid fb-white-post flex-item-grow">
+		<div class="container-fluid fb-white-post content">
             <div class="container">
                 <div class="row">
                     <div class="col-md-9">
                         {{#each (limit collections.posts this.pagination.end this.pagination.start)}}
                         <h1>{{ this.title }}</h1>
-                        <div class="post-date">{{ formatDate this.date day="numeric" month="long" year="numeric"}}</div>
+                        <div class="post-date">{{ formatDate this.date }}</div>
                         <article>{{#if this.excerpt}}{{{ this.excerpt }}}{{else}}{{{ this.contents }}}{{/if}}</article>
                         <a href="/{{ this.path }}" class="read-more">Read More</a>
                         {{/each}}

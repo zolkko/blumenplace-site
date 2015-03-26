@@ -1,6 +1,7 @@
 ---
 title: CMake and IDE setup
 date: 2015-03-23
+tags: cmake,qtcreator,embedded ide
 template: post.html
 ---
 

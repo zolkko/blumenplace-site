@@ -1,6 +1,7 @@
 ---
 title: Cortex-M3 clock sources
 date: 2015-03-25
+tags: cortex-m,systick
 template: post.html
 ---
 
