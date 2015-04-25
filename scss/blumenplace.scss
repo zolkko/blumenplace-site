@@ -8,6 +8,7 @@
 
 @import "gridle/_gridle";
 
+
 $settings: (
     context : 12,
     gutter-width: 0px,
@@ -156,20 +157,39 @@ div.container {
 
         article {
             @include gridle(9);
+
+            margin: 0;
+            padding-bottom: 1em;
+
             h1 {
                 padding: 0;
                 margin: 0;
             }
+
             .post-date {
                 color: #555;
-                padding-top: 0.9em;
-                padding-bottom: 1em;
+                padding: 0.9em 0 0 0;
             }
+
+            .read-more {
+                display: block;
+                padding: 1.4em 0 2em 0;
+                border-bottom: 1px dotted #555;
+                width: 90%;
+            }
+        }
+
+        ul {
+            list-style-type: none;
         }
     }
 
     footer {
         @include gridle(12);
+
+    	display: block;
+        background: url(/img/pattern.svg);
+        padding: 30px 20px 50px 20px;
     }
 }
 

@@ -1,13 +1,13 @@
 ---
-title: TI cmsys library is broken
+title: TI cmsis library is broken
 date: 2015-03-26
-tags: cmsys,cortex-m,ti
+tags: cmsis,cortex-m,ti
 template: post.html
 ---
 
 If you read this, most likely you have faced the same issue I did. It
 means that most likely you have downloaded
-[cmsys](http://www.ti.com/tool/cmsis_device_headers) implementation from one of the
+[cmsis](http://www.ti.com/tool/cmsis_device_headers) implementation from one of the
 biggest silicon manufacturer in the world - TI. And the library does not work. Even worth,
 your toolchain cannot assemble it and failed on strex instruction.
 
