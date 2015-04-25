@@ -1,39 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        {{> head }}
-    </head>
-	<body>
-        {{> head-line }}
-        {{> header subtitle="A set of tools to create automatic <b>energy efficient plant watering system</b>"}}
-		<div class="container-fluid fbg-banner">
-			<div class="container">
-				<div class="row">
-					<div class="col-md-3 text-center">
-                        <a href="http://en.wikipedia.org/wiki/Open-source_hardware"><img alt="open hardware" src="/img/ohw-logo.svg"></a>
-					</div>
-                    <div class="col-md-3 text-center"></div>
-                    <div class="col-md-3 text-center"></div>
-                    <div class="col-md-3 text-center"></div>
-				</div>
-				<div class="row">
-					<div class="col-md-3 text-center">Opensource Hardware</div>
-                    <div class="col-md-3 text-center"></div>
-                    <div class="col-md-3 text-center"></div>
-                    <div class="col-md-3 text-center"></div>
-				</div>
-			</div>
-		</div>
-		<div class="container-fluid fbg-white content">
-			<div class="container">
-				<div class="row">
-					<div class="col-md-12">
-                        {{{ contents }}}
-                    </div>
-				</div>
-			</div>
-		</div>
-        {{> foot-line }}
-	</body>
+<head>
+    {{> head }}
+</head>
+<body>
+    <div class="github-ribbon"><a href="https://github.com/zolkko/blumenplace">fork me on github</a></div>
+    <div class="container">
+    {{> header subtitle="A set of tools to create automatic <em>energy efficient plant watering system</em>" }}
+    <section class="fbg-banner">
+        <div>
+            <div>
+                <a href="http://en.wikipedia.org/wiki/Open-source_hardware"><img alt="open hardware" src="http://upload.wikimedia.org/wikipedia/commons/f/fd/Open-source-hardware-logo.svg"></a>
+            </div>
+            <div>
+                <a href="http://en.wikipedia.org/wiki/Open-source_hardware"><img alt="open hardware" src="http://upload.wikimedia.org/wikipedia/commons/f/fd/Open-source-hardware-logo.svg"></a>
+            </div>
+            <div>
+                <a href="http://en.wikipedia.org/wiki/Open-source_hardware"><img alt="open hardware" src="http://upload.wikimedia.org/wikipedia/commons/f/fd/Open-source-hardware-logo.svg"></a>
+            </div>
+            <div>
+                <a href="http://en.wikipedia.org/wiki/Open-source_hardware"><img alt="open hardware" src="http://upload.wikimedia.org/wikipedia/commons/f/fd/Open-source-hardware-logo.svg"></a>
+            </div>
+        </div>
+    </section>
+    <main>
+        <section>
+            {{{ contents }}}
+        </section>
+        <section>
+            <h1>Road Map</h1>
+            <p></p>
+        </section>
+    </main>
+    {{> footer }}
+    </div>
+</body>
 </html>
-

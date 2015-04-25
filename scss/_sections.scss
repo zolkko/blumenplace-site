@@ -1,21 +1,3 @@
-body {
-    width: 100%;
-    height: 100vh;
-    padding: 0;
-    margin: 0;
-    border: 0;
-    display: flex;
-    flex-direction: column;
-
-    div {
-        flex-shrink: 0;
-    }
-
-    div.content {
-        flex: 1 0 auto;
-    }
-}
-
 .head-line {
     height: 50px;
 }

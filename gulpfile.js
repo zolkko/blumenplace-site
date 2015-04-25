@@ -5,7 +5,7 @@ var path = require('path'),
 
 var gulp = require('gulp'),
     source = require('vinyl-source-stream'),
-    sass = require('gulp-sass'),
+    sass = require('gulp-ruby-sass'),
     minifyHTML = require('gulp-minify-html'),
     autoprefixer = require('gulp-autoprefixer'),
     minifycss = require('gulp-minify-css'),
@@ -48,13 +48,13 @@ function parseArguments() {
 
     var optparse = require('optparse'),
         switches = [
-            ['--build-dir', 'Build output directory'],
+            ['-o', '--build-dir [VALUE]', 'Build output directory'],
             ['-h', '--help', 'Display this help']
         ],
         parser = new optparse.OptionParser(switches);
 
-    parser.on('build-dir', function(value) {
-        buildDir = value;
+    parser.on('build-dir', function(passed, value) {
+        buildDir = value.trim();
     });
 
     parser.on('help', function () {
@@ -95,8 +95,7 @@ gulp.task('clean', function (cb) {
 
 
 gulp.task('build-sass', function () {
-    gulp.src(srcScss)
-        .pipe(sass())
+    sass('scss/')
         .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1'))
         .pipe(rename({suffix: '.min'}))
         .pipe(minifycss())
@@ -153,11 +152,11 @@ gulp.task('build-html', function () {
             },
             partials: {
                 'head': '_head',
-                'syntax-header': '_syntax-header',
-                'head-line': '_head-line',
+                'syntax-head': '_syntax-head',
                 'header': '_header',
                 'main-menu': '_main-menu',
-                'foot-line': '_foot-line'
+                'footer': '_footer',
+                'like-script': '_fblike'
             }
         }));
 
