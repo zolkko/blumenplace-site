@@ -140,6 +140,8 @@ div.container {
         section {
             @include gridle(3);
 
+            padding-bottom: 2em;
+
             h1 {
                 text-align:center;
             }
@@ -155,10 +157,6 @@ div.container {
             @include gridle_suffix(1);
         }
 
-	section {
-	    padding-bottom: 2em;
-	}
-
         article {
             @include gridle(12);
 
@@ -171,15 +169,22 @@ div.container {
             }
 
             .post-date {
-                color: #555;
-                padding: 0.9em 0 0 0;
+                color: #888;
+                padding: 0.2em 0 0 0;
             }
 
             .read-more {
                 display: block;
                 padding: 1.4em 0 2em 0;
-                border-bottom: 1px dotted #555;
+                border-bottom: 1px dotted #888;
             }
+        }
+
+        #disqus_thread {
+            @include gridle(12);
+            margin: 2em 0 0 0;
+            padding: 1em 0 2em;
+            border-top: 1px dotted #555;
         }
     }
 

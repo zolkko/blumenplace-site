@@ -32,3 +32,10 @@ return result;
 The important thing here is "=&" specificator. It forces GCC to substitute different register into second operand.
 For more information on "=&" pleace see [over here](http://www.ibiblio.org/gferg/ldp/GCC-Inline-Assembly-HOWTO.html).
 
+
+Better way
+==========
+
+Beside patching TI version, what is wrong in so many ways, it is way more convinient just to generate from
+CMSIS-SVD file. One way to generate them is just to install Keil IDE trial, grab these files and proceed with gcc.
+

@@ -159,6 +159,7 @@ gulp.task('build-html', function () {
                 'header': '_header',
                 'main-menu': '_main-menu',
                 'footer': '_footer',
+                'disq': '_disq',
                 'like-script': '_fblike'
             }
         }));
