@@ -8,7 +8,6 @@
     <div class="github-ribbon"><a href="https://github.com/zolkko/blumenplace">fork me on github</a></div>
     <div class="container">
     {{> header subtitle="technical docs"}}
-
     <main>
         {{#each (limit collections.posts this.pagination.end this.pagination.start)}}
         <article>
@@ -18,21 +17,13 @@
             <a class="read-more" href="/{{ this.path }}">Read more</a>
         </article>
         {{/each}}
-
-        <nav>
-            {{#each collections.posts}}
-            <li><a href="/{{ this.path }}">{{ this.title }}</a></li>
-            {{/each}}
-        </nav>
     </main>
-
     {{#if this.pagination}}
     <nav>
         {{#if this.pagination.prev}}<a href="/{{ this.pagination.prev.path }}">&lt; Next</a>{{/if}}
         {{#if this.pagination.next}}<a href="/{{ this.pagination.next.path }}">Prev &gt;</a>{{/if}}
     </nav>
     {{/if}}
-	
     {{> footer }}
     </div>
 </body>

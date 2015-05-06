@@ -1,5 +1,5 @@
 ---
-title: Debugging emb-template
+title: Building and debugging emb-template
 date: 2015-04-17
 tags: gdb,cgdb,cortex-m
 template: post.html

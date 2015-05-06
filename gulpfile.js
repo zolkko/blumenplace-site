@@ -10,7 +10,8 @@ var gulp = require('gulp'),
     autoprefixer = require('gulp-autoprefixer'),
     minifycss = require('gulp-minify-css'),
     rename = require('gulp-rename'),
-    connect = require('gulp-connect');
+    connect = require('gulp-connect'),
+    highlight = require('gulp-highlight');
 
 var srcDir = __dirname,
     srcMd = path.join(srcDir, 'src', '**', '*.md'),
@@ -111,7 +112,9 @@ gulp.task('build-html', function () {
         collections = require('metalsmith-collections'),
         paginate = require('metalsmith-paginate'),
         permalinks = require('metalsmith-permalinks'),
-        assign = require('lodash.assign');
+        assign = require('lodash.assign'),
+        cheerio = require('cheerio'),
+        hljs = require('highlight.js');
 
     var metalPipe = gulpsmith()
         .metadata({
@@ -162,7 +165,7 @@ gulp.task('build-html', function () {
 
     gulp.src(srcMd)
         .pipe(gulpFrontMatter()).on('data', function(file) {
-            var contents, contentsString, excerpt, index;
+            var contents, contentsString, excerpt, index, $;
 
             assign(file, file.frontMatter);
             delete file.frontMatter;
@@ -186,6 +189,7 @@ gulp.task('build-html', function () {
             file['excerpt'] = excerpt;
         })
         .pipe(metalPipe)
+        .pipe(highlight())
         .pipe(minifyHTML({quotes: true}))
         .pipe(gulp.dest(dstDir))
         .pipe(connect.reload());
