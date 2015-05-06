@@ -1,7 +1,7 @@
 var path = require('path'),
     options = parseArguments(),
-    markdown = require('markdown'),
-    handlebars = require('handlebars');
+    handlebars = require('handlebars'),
+    marked = require('marked');
 
 var gulp = require('gulp'),
     source = require('vinyl-source-stream'),
@@ -112,9 +112,7 @@ gulp.task('build-html', function () {
         collections = require('metalsmith-collections'),
         paginate = require('metalsmith-paginate'),
         permalinks = require('metalsmith-permalinks'),
-        assign = require('lodash.assign'),
-        cheerio = require('cheerio'),
-        hljs = require('highlight.js');
+        assign = require('lodash.assign');
 
     var metalPipe = gulpsmith()
         .metadata({
@@ -183,7 +181,9 @@ gulp.task('build-html', function () {
                 }
 
                 if (path.extname(file.path) === '.md' && excerpt) {
-                    excerpt = markdown.parse(excerpt.toString());
+                    excerpt = marked(excerpt.toString(), {
+                        gfm: true
+                    });
                 }
             }
 
