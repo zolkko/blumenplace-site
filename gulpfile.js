@@ -9,9 +9,10 @@ var gulp = require('gulp'),
     minifyHTML = require('gulp-minify-html'),
     autoprefixer = require('gulp-autoprefixer'),
     minifycss = require('gulp-minify-css'),
-    rename = require('gulp-rename'),
     connect = require('gulp-connect'),
-    highlight = require('gulp-highlight');
+    highlight = require('gulp-highlight')
+    merge = require('gulp-merge'),
+    concat = require('gulp-concat');
 
 var srcDir = __dirname,
     srcMd = path.join(srcDir, 'src', '**', '*.md'),
@@ -96,10 +97,16 @@ gulp.task('clean', function (cb) {
 
 
 gulp.task('build-sass', function () {
-    sass('scss/')
-        .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1'))
-        .pipe(rename({suffix: '.min'}))
+    var sassFile = sass('scss/')
+        .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1'));
+
+    var hljFile = gulp.src([
+        'node_modules/gulp-highlight/node_modules/highlight.js/styles/github.css'
+    ]);
+
+    merge(sassFile, hljFile)
         .pipe(minifycss())
+        .pipe(concat('blumenplace.min.css'))
         .pipe(gulp.dest(dstCssDir));
 });
 
@@ -153,7 +160,6 @@ gulp.task('build-html', function () {
             },
             partials: {
                 'head': '_head',
-                'syntax-head': '_syntax-head',
                 'header': '_header',
                 'main-menu': '_main-menu',
                 'footer': '_footer',
