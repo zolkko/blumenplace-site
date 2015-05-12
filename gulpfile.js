@@ -1,25 +1,36 @@
+var thumbnail = {
+    threshold: 320,
+    width: 640,
+    suffix: '.thumbnail'
+};
+
 var path = require('path'),
     options = parseArguments(),
     handlebars = require('handlebars'),
     marked = require('marked');
 
 var gulp = require('gulp'),
-    source = require('vinyl-source-stream'),
     sass = require('gulp-ruby-sass'),
     minifyHTML = require('gulp-minify-html'),
     autoprefixer = require('gulp-autoprefixer'),
     minifycss = require('gulp-minify-css'),
     connect = require('gulp-connect'),
-    highlight = require('gulp-highlight')
     merge = require('gulp-merge'),
-    concat = require('gulp-concat');
+    rename = require('gulp-rename'),
+    resize = require('gulp-image-resize'),
+    gulpif = require('gulp-if'),
+    concat = require('gulp-concat'),
+    imageSize = require('image-size'),
+    source = require('vinyl-source-stream'),
+    lazypipe = require('lazypipe');
 
 var srcDir = __dirname,
     srcMd = path.join(srcDir, 'src', '**', '*.md'),
     srcTpl = path.join(srcDir, 'templates', '*.html'),
     srcScss = path.join(srcDir, 'scss', '*.scss'),
-    srcSvg = path.join(srcDir, 'img', '*.svg'),
+    srcSvg = path.join(srcDir, 'img', '**', '*.svg'),
     srcPng = path.join(srcDir, 'img', '**', '*.png'),
+    srcBlogPng = path.join(srcDir, 'img', 'blog', '**', '*.png'),
     dstDir = options.buildDir,
     dstCssDir = path.join(dstDir, 'css'),
     dstImgDir = path.join(dstDir, 'img');
@@ -43,10 +54,40 @@ handlebars.registerHelper('formatDate', function (date) {
 });
 
 
+function markdownImage(href, title, text) {
+    var fs = require('fs'),
+        url, filePath, fileName, fileExt, fileBaseName, thumbUrl, out;
+
+    if (href.indexOf('/img/blog/') === 0) {
+        url = href.split('/');
+        filePath = path.join.apply(null, [srcDir].concat(url));
+
+        if (fs.existsSync(filePath) && imageSize(filePath).width > thumbnail.threshold) {
+            fileName = url[url.length - 1];
+            fileExt = path.extname(fileName);
+            fileBaseName = path.basename(fileName, fileExt);
+
+            thumbUrl = url.slice(0, url.length - 1);
+            thumbUrl.push(fileBaseName + thumbnail.suffix + fileExt);
+
+            out = '<a href="' + href + '"><img src="' + thumbUrl.join('/') + '" alt="' + text + '"';
+            if (title) {
+                out += ' title="' + title + '"';
+            }
+            return out + (this.options.xhtml ? '/></a>' : '></a>');
+        }
+    }
+
+    out = '<img src="' + href + '" alt="' + text + '"';
+    if (title) {
+        out += ' title="' + title + '"';
+    }
+    return out + (this.options.xhtml ? '/>' : '>');
+}
+
+
 function parseArguments() {
-    var buildDir = path.join(__dirname, 'build'),
-        remoteHost = 'example.com',
-        remoteDir = '/var/www';
+    var buildDir = path.join(__dirname, 'build');
 
     var optparse = require('optparse'),
         switches = [
@@ -119,7 +160,19 @@ gulp.task('build-html', function () {
         collections = require('metalsmith-collections'),
         paginate = require('metalsmith-paginate'),
         permalinks = require('metalsmith-permalinks'),
-        assign = require('lodash.assign');
+        assign = require('lodash.assign'),
+        hljs = require('highlight.js');
+
+    var renderer = new marked.Renderer();
+    renderer.image = markdownImage;
+
+    var markedOptions = {
+        gfm: true,
+        highlight: function (code, lang) {
+            return hljs.highlightAuto(code, [lang]).value;
+        },
+        renderer: renderer
+    };
 
     var metalPipe = gulpsmith()
         .metadata({
@@ -144,9 +197,7 @@ gulp.task('build-html', function () {
             perPage: 10,
             path: 'blog/page'
         }))
-        .use(metalMd({
-            gfm: true
-        }))
+        .use(metalMd(markedOptions))
         .use(permalinks({
             pattern: 'blog/:date/:title'
         }))
@@ -187,16 +238,13 @@ gulp.task('build-html', function () {
                 }
 
                 if (path.extname(file.path) === '.md' && excerpt) {
-                    excerpt = marked(excerpt.toString(), {
-                        gfm: true
-                    });
+                    excerpt = marked(excerpt.toString(), markedOptions);
                 }
             }
 
             file['excerpt'] = excerpt;
         })
         .pipe(metalPipe)
-        .pipe(highlight())
         .pipe(minifyHTML({quotes: true}))
         .pipe(gulp.dest(dstDir))
         .pipe(connect.reload());
@@ -204,11 +252,24 @@ gulp.task('build-html', function () {
 
 
 gulp.task('build-img', function () {
+    var thumbnailPipe = lazypipe()
+        .pipe(rename, {suffix: thumbnail.suffix})
+        .pipe(resize, {
+            width: thumbnail.width,
+            crop: false,
+            upscale: false,
+            imageMagick: true
+        });
+
     gulp.src(srcSvg)
         .pipe(gulp.dest(dstImgDir))
         .pipe(connect.reload());
 
     gulp.src(srcPng)
+        .pipe(gulp.dest(dstImgDir))
+        .pipe(gulpif(function (file) {
+            return file.path.indexOf(path.join(srcDir, 'img', 'blog')) !== 0 && imageSize(file.path).width > thumbnail.threshold;
+        }, thumbnailPipe()))
         .pipe(gulp.dest(dstImgDir))
         .pipe(connect.reload());
 });
