@@ -23,7 +23,6 @@
     "handlebars": "^3.0.0",
     "highlight.js": "^8.5.0",
     "image-size": "^0.3.5",
-    "imagemagick": "^0.1.3",
     "lazypipe": "^0.2.3",
     "lodash.assign": "^3.0.0",
     "marked": "^0.3.3",
