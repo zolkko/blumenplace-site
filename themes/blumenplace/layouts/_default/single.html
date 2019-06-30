@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+{{ partial "header.html" . }}
+<body>
+	<div class="container">
+		{{ partial "head.html" . }}
+		<main>
+			<article>
+				<h1>{{.Title}}</h1>
+				<div class="post-date">{{ dateFormat "Jan 2, 2006" .Date }}</div>
+				{{ .Content }}
+			</article>
+			<div id="disqus_thread"></div>
+		</main>
+
+		{{- $.Scratch.Set "isDisqus" true -}}
+
+		{{- if and (isset .Params "type") (in (.Site.Params.disableDisqusTypes | default (slice "page")) .Params.type) -}}
+		{{- $.Scratch.Set "isDisqus" false -}}
+		{{- end -}}
+
+		{{- if and (isset .Params "disqus") (eq .Params.disqus false) -}}
+		{{- $.Scratch.Set "isDisqus" false -}}
+		{{- else if and (isset .Params "disqus") (eq .Params.disqus true) -}}
+		{{- $.Scratch.Set "isDisqus" true -}}
+		{{- end -}}
+
+		{{- if eq ($.Scratch.Get "isDisqus") true -}}
+		{{- partial "disqus.html" . -}}
+		{{- end -}}
+
+		{{ partial "footer.html" . }}
+	</div>
+</body>
+</html>

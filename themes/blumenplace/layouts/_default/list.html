@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+{{ partial "header.html" . }}
+<body>
+	<div class="container">
+		{{ partial "head.html" . }}
+		<main>
+			<article>
+				{{ if isset .Data "Term" }}
+					<h1>Entries tagged - "{{.Data.Term}}"</h1>
+				{{ else }}
+					<h1>All posts</h1>
+				{{ end }}
+				<ul>
+					{{- range .Data.Pages -}}
+					{{- if (in (.Site.Params.excludedTypes | default (slice "page")) .Type) -}}
+					{{- else -}}
+					<li><a href="{{ .RelPermalink }}">{{.Title}}</a> <span class="meta">{{ dateFormat "Jan 2, 2006" .Date }}</span></li>
+					{{- end -}}
+					{{- end -}}
+				</ul>
+			</article>
+		</main>
+		{{ partial "footer.html" . }}
+	</div>
+</body>
+</html>

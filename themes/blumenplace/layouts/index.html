@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+{{ partial "header.html" . }}
+<body>
+	<div class="container">
+		{{ partial "head.html" . }}
+		<main>
+			{{- $.Scratch.Set "counter" 0 -}}
+			{{- range .Data.Pages -}}
+			{{- if (in (.Site.Params.excludedTypes | default (slice "page")) .Type) -}}
+			{{- else -}}
+			{{- if lt ($.Scratch.Get "counter") (.Site.Params.RecentPostsCount | default 10) -}}
+			<article>
+				<h1>{{.Title}}</h1>
+				<div class="post-date">{{ dateFormat "Jan 2, 2006" .Date }}</div>
+				{{ .Summary | markdownify }}
+				<a class="read-more" href="{{ .RelPermalink }}">Read more</a>
+			</article>
+			{{- $.Scratch.Set "counter" (add ($.Scratch.Get "counter") 1) -}}
+			{{- end -}}
+			{{- end -}}
+			{{- end -}}
+		</main>
+		{{ partial "footer.html" . }}
+	</div>
+</body>
+</html>
